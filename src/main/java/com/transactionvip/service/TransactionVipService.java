@@ -1,14 +1,20 @@
 package com.transactionvip.service;
 
-import com.transactionvip.model.FixedTermVipModel;
-import com.transactionvip.model.TransactionVipModel;
-import com.transactionvip.repository.ITransactionVipRepository;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+
+import com.transactionvip.model.FixedTermVipModel;
+import com.transactionvip.model.TransactionVipModel;
+import com.transactionvip.repository.ITransactionVipRepository;
+
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -18,12 +24,13 @@ public class TransactionVipService implements ITransactionVipService {
   ITransactionVipRepository iTransactionVipRepository;
   
   @Autowired
+  @Qualifier("bankFixedTermAccountVip")
   WebClient client;
 
   FixedTermVipModel fixedTermVipModel = new FixedTermVipModel();
-
+  
   @Override
-  public Mono<TransactionVipModel> findByAccountNumber(String accountNumber) {
+  public Flux<TransactionVipModel> findByAccountNumber(String accountNumber) {
 
     return iTransactionVipRepository.findByAccountNumber(accountNumber);
   }
@@ -106,4 +113,13 @@ public class TransactionVipService implements ITransactionVipService {
 .bodyToMono(FixedTermVipModel.class)
 .switchIfEmpty(Mono.empty());
   }
+
+@Override
+public Flux<TransactionVipModel> findByAccountNumberAndCreatedAtBetween(String accountNumber, String from, String to) {
+	
+	return iTransactionVipRepository.findByAccountNumberAndCreatedAtBetween(accountNumber, from, to)
+		.filter(x -> x.getChargeAmount() > 0.0);
+				
+}
+
 }

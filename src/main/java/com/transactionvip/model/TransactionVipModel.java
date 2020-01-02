@@ -1,7 +1,8 @@
 package com.transactionvip.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -16,12 +17,12 @@ public class TransactionVipModel {
   private Double beforeAmount;
   private Double afterAmount;
   private Double chargeAmount;
-
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm:ss")
-  private Date createdAt;
+  private String createdAt;
 
   public TransactionVipModel() {
-    this.createdAt = new Date();
+	  
+	SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss"); 
+    this.createdAt = formatter.format(new Date());
   }
 
   public String getId() {
@@ -80,12 +81,14 @@ public class TransactionVipModel {
     this.chargeAmount = chargeAmount;
   }
 
-  public Date getCreatedAt() {
-    return createdAt;
-  }
+public String getCreatedAt() {
+	return createdAt;
+}
 
-  public void setCreatedAt(Date createdAt) {
-    this.createdAt = createdAt;
-  }
+public void setCreatedAt(String createdAt) {
+	this.createdAt = createdAt;
+}
+
+  
 
 }

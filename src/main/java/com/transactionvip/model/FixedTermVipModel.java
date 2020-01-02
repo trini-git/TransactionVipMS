@@ -1,15 +1,5 @@
 package com.transactionvip.model;
 
-import java.util.Date;
-import java.util.List;
-
-import javax.validation.constraints.NotNull;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 public class FixedTermVipModel {
 
 	private String id;
@@ -30,15 +20,9 @@ public class FixedTermVipModel {
 
 	private int numberOfMovement;
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm:ss")
-	private Date createdAt;
+	private String createdAt;
 
 	private String status;
-
-	public FixedTermVipModel() {
-
-		this.createdAt = new Date();
-	}
 
 	public String getId() {
 		return id;
@@ -112,11 +96,11 @@ public class FixedTermVipModel {
 		this.numberOfMovement = numberOfMovement;
 	}
 
-	public Date getCreatedAt() {
+	public String getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(Date createdAt) {
+	public void setCreatedAt(String createdAt) {
 		this.createdAt = createdAt;
 	}
 

@@ -1,5 +1,6 @@
 package com.transactionvip;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -8,8 +9,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class WebClientConfig {
 
 	@Bean
-	public WebClient registerWebClient() {
-		return WebClient.create("http://localhost:8010/fix-term-vip");
+	@Qualifier("bankFixedTermAccountVip")
+	public WebClient bankFixedTermAccountVipWebClient() {
+		return WebClient.create("http://localhost:8020/api/bankFixedTermAccountVip");
 		
 	}
 }
